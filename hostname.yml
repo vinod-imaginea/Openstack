@@ -1,0 +1,6 @@
+---
+  - hosts: all
+    user: root
+    tasks:
+      - name: get client hostname 
+        command: hostname
