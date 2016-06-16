@@ -1,0 +1,16 @@
+---
+  - hosts: all
+    user: root
+    tasks:
+      - name: install NTP 
+        apt: name=ntp state=installed
+
+      - name: edit the ntp.conf file
+        copy: src=ntp.conf dest=/etc/ntp.conf 
+
+      - name: restart the ntp
+        service: name=ntp state=restarted
+
+
+         
+
