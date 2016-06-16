@@ -1,0 +1,12 @@
+---
+  - hosts: all
+    user: root
+    tasks:
+      - name: install bridge tools
+        apt: name=bridge-utils state=installed
+
+      - name: creating management ip
+        copy: src=networkip dest=/etc/network/interfaces
+
+      - name: enabling the management network
+        command: sudo init 6
