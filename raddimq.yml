@@ -1,0 +1,10 @@
+---
+  - hosts: all
+    user: root
+    tasks:
+      - name: install rabbitmq
+        apt: package=rabbitmq-server state=installed
+      - name: configure mq
+        command: rabbitmqctl add_user openstack pramati123
+      - name: assign permissions
+        command: rabbitmqctl set_permissions openstack ".*" ".*" ".*" 
