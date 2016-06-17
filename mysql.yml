@@ -1,0 +1,21 @@
+---
+ - hosts: testmachine
+   user: root
+   vars:
+    MySQL_root_pass: pramati123
+   tasks:
+      - name: Set MySQL root password before installing
+        debconf: name='mysql-server' question='mysql-server/root_password' value='{{MySQL_root_pass | quote}}' vtype='password'
+      - name: Confirm MySQL root password before installing
+        debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{MySQL_root_pass | quote}}' vtype='password'
+      - name: install tools
+        apt: name={{item}} state=present update_cache=yes
+        with_items:
+             - python-mysqldb
+      - name: Install mariadb server
+        apt: name=mariadb-server state=present update_cache=yes
+      - name: configure mysql
+        copy: src=mysqld_openstack.cnf dest=/etc/mysql/conf.d/       
+      - name: restart service
+        service: name=mysql state=restarted 
+      
